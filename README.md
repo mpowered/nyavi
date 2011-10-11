@@ -43,3 +43,8 @@ If you want to build your own HTML structure for the view you can pass in a bloc
       %ul
         = render :partial => 'your_custom_menu_item', :collection => items, :locals => {:active_item => active_item}
 
+Installation
+------------
+
+    gem "nyavi", :git => "git://github.com/mpowered/nyavi.git"
+
