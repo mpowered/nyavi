@@ -12,7 +12,7 @@ module Nyavi
   end
 end
 
-require 'nyavi/loader'
+require 'nyavi/menu'
 require 'nyavi/item'
 
 ActionView::Base.send(:include, Nyavi::ViewHelpers)
