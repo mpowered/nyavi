@@ -1,4 +1,4 @@
-class Nyavi::Loader
+class Nyavi::Menu
   attr_reader :controller
 
   def initialize(menu_name, controller)
@@ -8,9 +8,14 @@ class Nyavi::Loader
     @action_name = controller.action_name
   end
 
-  def items
+  def items_with_active
     return if menu_items.nil?
-    yield menu_items.map{|i| Nyavi::Item.new(i, self)}.select(&:allowed?), active_item
+    yield items, active_item
+  end
+
+  # Returns all allowed menu items wrapped as Nyavi::Items
+  def items
+    menu_items.map{|i| Nyavi::Item.new(i, self)}.select(&:allowed?)
   end
 
   private

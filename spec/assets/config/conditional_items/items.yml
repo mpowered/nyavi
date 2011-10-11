@@ -1,0 +1,8 @@
+accounts:
+  index:
+    - item_1: 
+        target: '#'
+        condition: true
+    - item_2: 
+        target: '#'
+        condition: false
