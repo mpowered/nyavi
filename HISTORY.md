@@ -1,3 +1,7 @@
+0.0.4
+-----
+* Add 'inactive' and 'active' class to menu items
+
 0.0.3
 -----
 * Fix gem startup
