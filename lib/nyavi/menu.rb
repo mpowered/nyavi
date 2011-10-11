@@ -15,16 +15,16 @@ class Nyavi::Menu
 
   # Returns all allowed menu items wrapped as Nyavi::Items
   def items
-    menu_items.map{|i| Nyavi::Item.new(i, self)}.select(&:allowed?)
+    @items ||= menu_items.map{|i| Nyavi::Item.new(i, self)}.select(&:allowed?)
+  end
+
+  def active_item
+    @active_item ||= get_value(controller_active_item_config)
   end
 
   private
   def menu_items
     @menu_items ||= get_value(controller_menu_items_config)
-  end
-
-  def active_item
-    @active_item ||= get_value(controller_active_item_config)
   end
 
   def get_value(config)

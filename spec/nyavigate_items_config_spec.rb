@@ -1,9 +1,6 @@
-module Nyavi;end
-RAILS_ROOT = `pwd`.chomp + '/spec/assets/'
-require 'nyavi/menu'
-require 'nyavi/item'
+require 'config_spec_helper'
 
-describe 'Nyavi config' do
+describe 'Nyavi items config' do
   # A menu can be configured for all actions of a controller
   # YAML file eg:
   # -------------
@@ -12,7 +9,7 @@ describe 'Nyavi config' do
   #   - menu_item_2: path
   describe "controller wide configuration" do
     before(:each) do
-      @menu = Nyavi::Menu.new(:controller_wide, controller)
+      @menu = Nyavi::Menu.new(:controller_wide_menu, controller)
     end
 
     it "returns all menu items regardless of the action" do
@@ -29,7 +26,7 @@ describe 'Nyavi config' do
   #     - menu_item_2: path
   describe "action specific configuration" do
     before(:each) do
-      @menu = Nyavi::Menu.new(:action_specific, controller)
+      @menu = Nyavi::Menu.new(:action_specific_menu, controller)
     end
 
     it "returns only the menu items configured for the current action" do
@@ -45,7 +42,7 @@ describe 'Nyavi config' do
   #       condition: current_user.is_superuser?
   describe "conditional menu item configuration" do
     before(:each) do
-      @menu = Nyavi::Menu.new(:conditional_items, controller)
+      @menu = Nyavi::Menu.new(:conditional_items_menu, controller)
     end
 
     it "does not return the menu item when the condition fails" do
