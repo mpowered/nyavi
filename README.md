@@ -31,11 +31,23 @@ To define which items must be marked as active in a particular context use the `
     controller_name:
       action_name: item_1 # item_1 will be active in this instance
 
+If you more than one menu item that can be active within a specific action then you can specify the conditons as follows:
+
+    controller_name:
+      action_name:
+        "params[:id] == 'scorecard'" : item_1
+        "params[:id] == 'ownership'" : item_2
+
+
 Usage
 -----
 The menu is rendered as a UL with each menu item in its own LI tag. The active item has the class 'active' added to the LI. To render your menu simply call the following in your view:
 
     = nyavigate_the :name_of_menu
+
+The configuration files must reside in `config/:name_of_menu`. You will need to create the two YAML files needed:
+* items.yml
+* active_items.yml
 
 If you want to build your own HTML structure for the view you can pass in a block:
 
