@@ -16,11 +16,10 @@ class Nyavi::Item
   def allowed?
     return true if compact_config?
     @allowed ||= @config['condition'].is_a?(String) ? eval(@config['condition'], @template_binding) : @config['condition']
-    @allowed
   end
 
   private
   def compact_config?
-    @compact_config ||= @config['target'].nil?
+    @compact_config ||= !@config.is_a?(Hash)
   end
 end
