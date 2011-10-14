@@ -1,4 +1,4 @@
-%ul
+%ul{:class => menu_name}
   - items.each do |item|
-    %li{:onclick => "window.location='#{item.target}'", :class => (item.name == active_item ? 'active' : 'inactive')}
-      = item.name
+    %li{:class => (item.name == active_item ? 'active' : 'inactive')}
+      %a{:href => item.target}= item.name.titleize

@@ -5,7 +5,7 @@ module Nyavi
         if block_given?
           yield tabs, active_tab
         else
-          render :partial => 'nyavigate/menu_item.html.haml', :locals => {:items => items, :active_item => active_item}
+          render :partial => 'nyavigate/menu_item.html.haml', :locals => {:items => items, :active_item => active_item, :menu_name => menu_name}
         end
       end
     end
