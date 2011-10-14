@@ -1,11 +1,12 @@
 class Nyavi::Menu
-  attr_reader :controller
+  attr_reader :controller, :template_binding
 
   def initialize(menu_name, controller)
     @menu_name = menu_name
     @controller = controller
     @controller_name = controller.controller_name
     @action_name = controller.action_name
+    @template_binding = controller.instance_variable_get(:@template).send(:binding)
   end
 
   def items_with_active
@@ -18,8 +19,20 @@ class Nyavi::Menu
     @items ||= menu_items.map{|i| Nyavi::Item.new(i, self)}.select(&:allowed?)
   end
 
+  # Returns the name of the active menu item
   def active_item
-    @active_item ||= get_value(controller_active_item_config)
+    return @active_item if @active_item
+    # Simple configuration means that name is returned immediately
+    @active_item = get_value(controller_active_item_config)
+
+    # If the configuration is a Hash then we need to find the first
+    # menu item that has a passing condition
+    if @active_item.is_a? Hash
+      @active_item.each do |condition, key|
+        @active_item = key and break if eval(condition, @template_binding)
+      end
+    end
+    @active_item
   end
 
   private

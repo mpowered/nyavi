@@ -5,7 +5,7 @@ class Nyavi::Item
     @name = raw_item.keys.first
     @config = raw_item.values.first
     @menu = menu
-    @template_binding = @menu.controller.instance_variable_get(:@template).send(:binding)
+    @template_binding = @menu.template_binding
   end
 
   def target
