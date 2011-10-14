@@ -1,3 +1,7 @@
+0.0.6
+-----
+* Fix item#compact_config?
+
 0.0.5
 -----
 * Use 'a' tags instead of onclick events
