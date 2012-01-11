@@ -1,3 +1,7 @@
+0.1.0
+-----
+* add support for dynamic items
+
 0.0.6
 -----
 * Fix item#compact_config?
