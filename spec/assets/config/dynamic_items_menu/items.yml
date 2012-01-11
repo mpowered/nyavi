@@ -1,6 +1,9 @@
 accounts:
   static_items:
-    - static_item_1: c_path
+    before:
+      - static_item_1: c_path
+    after:
+      - static_item_2: d_path
   dynamic_items:
     items: current_account.addons_as_symbols
     links:

@@ -62,20 +62,26 @@ describe 'Nyavi items config' do
   #       links: hash of addon names and their links
   #       titles: hash of addon names and their titles
   #     static_items
-  #       - item_1: a_path
+  #       before:
+  #         - item_1: a_path
   describe "dynamic menu item configuration" do
     before(:each) do
       controller.template.stub_chain(:current_account, :addons_as_symbols).and_return(['first_addon', 'next_addon'])
       @menu = Nyavi::Menu.new(:dynamic_items_menu, controller)
     end
 
-    it "returns the dynamic menu items" do
-      @menu.items.collect(&:name).should include('first_addon')
-      @menu.items.collect(&:name).should include('next_addon')
+    it "returns the dynamic menu items with their titles" do
+      @menu.items.collect(&:name).should include('People')
+      @menu.items.collect(&:name).should include('Places')
     end
 
     it "returns the static menu items" do
       @menu.items.collect(&:name).should include('static_item_1')
+    end
+
+    it "honours the 'before' and 'after' static item config" do
+      @menu.items.first.name.should == 'static_item_1'
+      @menu.items.last.name.should == 'static_item_2'
     end
   end
 

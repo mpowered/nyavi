@@ -43,9 +43,10 @@ class Nyavi::Menu
   def get_value(config)
     # A proc used later to extract config
     extract_dynamic_and_static_items = Proc.new do |config, template_binding| 
-      items = eval(config['dynamic_items']['items'], template_binding) # Get all the items from the dynamic method
-      items = items.collect {|item| {item => config['dynamic_items']['links'][item]}} # Group dynamic items and their targets
-      items += config['static_items'] if config['static_items'] # Add any static items
+      items = eval(config['dynamic_items']['items'], template_binding).map(&:to_s) # Get all the items from the dynamic method
+      items = items.collect {|item| {config['dynamic_items']['titles'][item] => config['dynamic_items']['links'][item]}} # Group dynamic items with their titels and their targets
+      items = config['static_items']['before'] + items if config['static_items'] # Add any 'before' static items
+      items = items + config['static_items']['after'] if config['static_items'] # Add any 'after' static items
       items
     end
 

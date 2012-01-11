@@ -46,7 +46,12 @@ If you would like to have menu items dynamically generated then you can configur
         links: A hash of key/values to map links to items
         items: current_scorecard.elements_as_symbols
       static_items:
-        - item_1: path
+        before:
+          - item_1: path
+        after:
+          - item_2: path
+
+The 'before' and 'after' keys in the 'static_items' you to set the position of the static items relative to the dynamic items.
 
 
 Usage
