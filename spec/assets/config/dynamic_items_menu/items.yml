@@ -1,0 +1,11 @@
+accounts:
+  static_items:
+    - static_item_1: c_path
+  dynamic_items:
+    items: current_account.addons_as_symbols
+    links:
+      first_addon: a_path
+      next_addon: b_path
+    titles:
+      first_addon: 'People'
+      next_addon: 'Places'

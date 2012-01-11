@@ -1,0 +1,6 @@
+accounts:
+  index:
+    - item_1: '#'
+    - item_2: '#'
+  new:
+    - item_3: '#'

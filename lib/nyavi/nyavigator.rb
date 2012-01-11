@@ -20,12 +20,30 @@ class Nyavigator
   end
 
   def get_value(config)
-    # Support for following format in yml:
-    # controller: active_item
-    # or
-    # controller:
-    #  action: active_item
-    config.is_a?(Hash) ? config[@action_name] : config
+    # If the config is a Hash then
+    # 1 - It could mean that the options are nested in an 'action_name'
+    # 2 - Or that the menu is configured to deliver 'dynamic_items' across all actions
+    if config.is_a?(Hash)
+      # Case 2 above 
+      if config.keys.include?('dynamic_items')
+        
+      # Case 1 above
+      else
+        # If the action_name nested config has 'dynamic_items' as a key then
+        # it has action specific dynamic_items
+        if config[@action_name].keys.include?('dynamic_items')
+
+
+        # Otherwise it has regular items that are specific to an action
+        else
+          config[@action_name]
+        end
+      end
+
+    # Otherwise the config is for controllerwide regular items
+    else
+      config
+    end
   end
 
   def controller_menu_items_config
