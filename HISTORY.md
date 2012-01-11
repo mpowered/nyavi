@@ -1,3 +1,8 @@
+0.1.1
+-----
+* Add titles to dynamic items
+* add order to static items
+
 0.1.0
 -----
 * add support for dynamic items
