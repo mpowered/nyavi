@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    nyavi (0.0.1)
+    nyavi (0.1.1)
 
 GEM
   remote: http://rubygems.org/
