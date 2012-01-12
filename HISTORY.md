@@ -1,3 +1,7 @@
+0.1.2
+-----
+* Support static_items that dont define a before or after
+
 0.1.1
 -----
 * Add titles to dynamic items
