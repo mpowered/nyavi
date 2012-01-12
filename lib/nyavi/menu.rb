@@ -45,8 +45,8 @@ class Nyavi::Menu
     extract_dynamic_and_static_items = Proc.new do |config, template_binding| 
       items = eval(config['dynamic_items']['items'], template_binding).map(&:to_s) # Get all the items from the dynamic method
       items = items.collect {|item| {config['dynamic_items']['titles'][item] => config['dynamic_items']['links'][item]}} # Group dynamic items with their titels and their targets
-      items = config['static_items']['before'] + items if config['static_items'] # Add any 'before' static items
-      items = items + config['static_items']['after'] if config['static_items'] # Add any 'after' static items
+      items = config['static_items']['before'] + items if config['static_items'] && config['static_items'].has_key?('before') # Add any 'before' static items
+      items = items + config['static_items']['after'] if config['static_items'] && config['static_items'].has_key?('after') # Add any 'after' static items
       items
     end
 

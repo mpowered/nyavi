@@ -83,6 +83,17 @@ describe 'Nyavi items config' do
       @menu.items.first.name.should == 'static_item_1'
       @menu.items.last.name.should == 'static_item_2'
     end
+
+    context "when no 'after' items exist for 'static_items'" do
+      before(:each) do
+        controller.template.stub_chain(:current_account, :addons_as_symbols).and_return(['first_addon', 'next_addon'])
+        controller.stub(:action_name).and_return('show')
+      end
+
+      it "doesn't die" do
+        lambda { Nyavi::Menu.new(:dynamic_items_menu, controller).items }.should_not raise_error
+      end
+    end
   end
 
   def controller
