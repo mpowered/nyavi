@@ -1,3 +1,7 @@
+0.1.3
+-----
+* Add custom exceptions to clarify config errors
+
 0.1.2
 -----
 * Support static_items that dont define a before or after
