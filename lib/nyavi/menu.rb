@@ -1,5 +1,5 @@
 class Nyavi::Menu
-  attr_reader :controller, :template_binding
+  attr_reader :controller, :template_binding, :menu_name, :controller_name, :action_name
 
   def initialize(menu_name, controller)
     @menu_name = menu_name
@@ -43,10 +43,18 @@ class Nyavi::Menu
   def get_value(config)
     # A proc used later to extract config
     extract_dynamic_and_static_items = Proc.new do |config, template_binding| 
-      items = eval(config['dynamic_items']['items'], template_binding).map(&:to_s) # Get all the items from the dynamic method
-      items = items.collect {|item| {config['dynamic_items']['titles'][item] => config['dynamic_items']['links'][item]}} # Group dynamic items with their titels and their targets
-      items = config['static_items']['before'] + items if config['static_items'] && config['static_items'].has_key?('before') # Add any 'before' static items
-      items = items + config['static_items']['after'] if config['static_items'] && config['static_items'].has_key?('after') # Add any 'after' static items
+      # Get all the items from the dynamic method
+      items = eval(config['dynamic_items']['items'], template_binding).map(&:to_s) 
+      # Group dynamic items with their titles and their targets
+      items = items.collect do |item| 
+        target = config['dynamic_items']['links'][item]
+        raise NyaviItemsConfigError, "Dynamic menu item :#{item} missing its link definition in config/#{menu_name}/items.yml under controller :#{controller_name}" if target.nil?
+        {config['dynamic_items']['titles'][item] => target}
+      end
+      # Add any 'before' static items
+      items = config['static_items']['before'] + items if config['static_items'] && config['static_items'].has_key?('before')
+      # Add any 'after' static items
+      items = items + config['static_items']['after'] if config['static_items'] && config['static_items'].has_key?('after') 
       items
     end
 
@@ -60,7 +68,7 @@ class Nyavi::Menu
 
       # Case 1 above
       else
-        # If the options within the 'action_name' are a Hash includeing 'dynamic_items'
+        # If the options within the 'action_name' are a Hash including 'dynamic_items'
         # then the config is for dynamic items
         if config[@action_name].is_a?(Hash) && config[@action_name].keys.include?('dynamic_items')
         extract_dynamic_and_static_items.call(config[@action_name], @template_binding)

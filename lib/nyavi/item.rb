@@ -10,6 +10,7 @@ class Nyavi::Item
 
   def target
     @target = compact_config? ? @config : @config['target']
+    raise NyaviItemsConfigError, "Menu item '#{@name}' missing its target in config/#{@menu.menu_name}/items.yml under controller :#{@menu.controller_name}" if @target.nil?
     @target.include?('#') ? @target : eval(@target, @template_binding)
   end
 

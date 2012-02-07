@@ -1,0 +1,2 @@
+class NyaviItemsConfigError < StandardError
+end
