@@ -19,5 +19,9 @@ require 'nyavi/exceptions/nyavi_items_config_error'
 
 ActionView::Base.send(:include, Nyavi::ViewHelpers)
 
-# Rails 2 doesn't load view paths for Gems.
-ActionController::Base.view_paths.concat(["#{`bundle show nyavi`.chomp}/app/views"]) if Rails.version.first.to_i < 3
+if Rails.version.first.to_i < 3
+  # Rails 2 doesn't load view paths for Gems.
+  ActionController::Base.view_paths.concat(["#{`bundle show nyavi`.chomp}/app/views"])
+else
+  require 'nyavi/railtie'
+end
