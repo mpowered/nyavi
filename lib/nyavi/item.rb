@@ -5,18 +5,17 @@ class Nyavi::Item
     @name = raw_item.keys.first
     @config = raw_item.values.first
     @menu = menu
-    @template_binding = @menu.template_binding
   end
 
   def target
     @target = compact_config? ? @config : @config['target']
     raise NyaviItemsConfigError, "Menu item '#{@name}' missing its target in config/#{@menu.menu_name}/items.yml under controller :#{@menu.controller_name}" if @target.nil?
-    @target.include?('#') ? @target : eval(@target, @template_binding)
+    @target.include?('#') ? @target : @menu.template.instance_eval(@target)
   end
 
   def allowed?
     return true if compact_config?
-    @allowed ||= @config['condition'].is_a?(String) ? eval(@config['condition'], @template_binding) : @config['condition']
+    @allowed ||= @config['condition'].is_a?(String) ? @menu.template.instance_eval(@config['condition']) : @config['condition']
   end
 
   private

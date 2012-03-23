@@ -1,9 +1,9 @@
 module Nyavi
   module ViewHelpers
     def nyavigate_the(menu_name, &block)
-      Nyavi::Menu.new(menu_name, controller).items_with_active do |items, active_item|
+      Nyavi::Menu.new(menu_name, controller, self).items_with_active do |items, active_item|
         if block_given?
-          yield tabs, active_tab
+          yield items, active_item
         else
           render :partial => 'nyavigate/menu_item.html.haml', :locals => {:items => items, :active_item => active_item, :menu_name => menu_name}
         end

@@ -1,12 +1,12 @@
 class Nyavi::Menu
-  attr_reader :controller, :template_binding, :menu_name, :controller_name, :action_name
+  attr_reader :controller, :menu_name, :controller_name, :action_name, :template
 
-  def initialize(menu_name, controller)
+  def initialize(menu_name, controller, template)
     @menu_name = menu_name
     @controller = controller
     @controller_name = controller.controller_name
     @action_name = controller.action_name
-    @template_binding = controller.instance_variable_get(:@template).send(:binding)
+    @template = template
   end
 
   def items_with_active
@@ -29,7 +29,7 @@ class Nyavi::Menu
     # menu item that has a passing condition
     if @active_item.is_a? Hash
       @active_item.each do |condition, key|
-        @active_item = key and break if eval(condition, @template_binding)
+        @active_item = key and break if @template.instance_eval(condition)
       end
     end
     @active_item
@@ -42,9 +42,9 @@ class Nyavi::Menu
 
   def get_value(config)
     # A proc used later to extract config
-    extract_dynamic_and_static_items = Proc.new do |config, template_binding| 
+    extract_dynamic_and_static_items = Proc.new do |config, template| 
       # Get all the items from the dynamic method
-      items = eval(config['dynamic_items']['items'], template_binding).map(&:to_s) 
+      items = template.instance_eval(config['dynamic_items']['items']).map(&:to_s) 
       # Group dynamic items with their titles and their targets
       items = items.collect do |item| 
         target = config['dynamic_items']['links'][item]
@@ -64,14 +64,14 @@ class Nyavi::Menu
     if config.is_a?(Hash)
       # Case 2 above 
       if config.keys.include?('dynamic_items')
-        extract_dynamic_and_static_items.call(config, @template_binding)
+        extract_dynamic_and_static_items.call(config, @template)
 
       # Case 1 above
       else
         # If the options within the 'action_name' are a Hash including 'dynamic_items'
         # then the config is for dynamic items
         if config[@action_name].is_a?(Hash) && config[@action_name].keys.include?('dynamic_items')
-        extract_dynamic_and_static_items.call(config[@action_name], @template_binding)
+        extract_dynamic_and_static_items.call(config[@action_name], @template)
 
         # Otherwise it has regular items that are specific to an action
         else
