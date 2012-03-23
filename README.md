@@ -68,7 +68,10 @@ If you want to build your own HTML structure for the view you can pass in a bloc
 
     - nyavigate_the :name_of_menu do |items, active_item|
       %ul
-        = render :partial => 'your_custom_menu_item', :collection => items, :locals => {:active_item => active_item}
+        - items.each do |item|
+          %li{:class => (item.name == active_item ? 'active' : '' )}
+            %a{:href => item.target}= item.name
+
 
 Installation
 ------------
