@@ -3,7 +3,7 @@
 
 module Nyavi;end
 
-Rails.root = `pwd`.chomp + '/spec/assets/'
+RAILS_ROOT = `pwd`.chomp + '/spec/assets/'
 
 require 'nyavi/menu'
 require 'nyavi/item'
