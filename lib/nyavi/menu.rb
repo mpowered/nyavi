@@ -94,6 +94,6 @@ class Nyavi::Menu
   end
 
   def load_from_file(menu_name, file = 'items')
-    YAML::load_file(File.join(RAILS_ROOT,"/config/#{menu_name}/#{file}.yml"))
+    YAML::load_file(File.join(Rails.root,"/config/#{menu_name}/#{file}.yml"))
   end
 end
