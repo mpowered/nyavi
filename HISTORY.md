@@ -1,3 +1,8 @@
+0.2.0
+-----
+* Simplify hooks into template
+* Add Rails 3 support
+
 0.1.3
 -----
 * Add custom exceptions to clarify config errors
