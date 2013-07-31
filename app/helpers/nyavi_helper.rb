@@ -4,7 +4,7 @@ module NyaviHelper
       if block_given?
         yield items, active_item
       else
-        render :partial => 'nyavigate/menu_item.html.haml', :locals => {:items => items, :active_item => active_item, :menu_name => menu_name}
+        render :partial => 'nyavigate/menu_item', :locals => {:items => items, :active_item => active_item, :menu_name => menu_name}
       end
     end
   end
