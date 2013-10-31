@@ -1,0 +1,2 @@
+require 'nyavi/exceptions/nyavi_active_items_config_error'
+require 'nyavi/exceptions/nyavi_items_config_error'
