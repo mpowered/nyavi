@@ -19,6 +19,11 @@ class Nyavi::Menu
     @items ||= menu_items.map{|i| Nyavi::Item.new(i, self)}.select(&:allowed?)
   end
 
+  # Checks whether the menu has any items for the current context
+  def has_items?
+    menu_items.present?
+  end
+
   # Returns the name of the active menu item
   def active_item
     return @active_item if @active_item

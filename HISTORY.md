@@ -1,3 +1,7 @@
+0.3.0
+-----
+* Add #currently_nyavigating?
+
 0.2.0
 -----
 * Simplify hooks into template

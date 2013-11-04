@@ -8,4 +8,8 @@ module NyaviHelper
       end
     end
   end
+
+  def currently_nyavigating?(menu_name)
+    Nyavi::Menu.new(menu_name, controller, self).has_items?
+  end
 end
