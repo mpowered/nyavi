@@ -53,6 +53,9 @@ If you would like to have menu items dynamically generated then you can configur
 
 The 'before' and 'after' keys in the 'static_items' you to set the position of the static items relative to the dynamic items.
 
+Tricks
+------
+If the controller being used is nested, the controller_name does not include the parent levels - just the controller name based on the file.
 
 Usage
 -----
