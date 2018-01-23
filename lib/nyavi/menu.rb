@@ -54,7 +54,21 @@ class Nyavi::Menu
       items = items.collect do |item| 
         target = config['dynamic_items']['links'][item]
         raise NyaviItemsConfigError, "Dynamic menu item :#{item} missing its link definition in config/#{menu_name}/items.yml under controller :#{controller_name}" if target.nil?
-        {config['dynamic_items']['titles'][item] => target}
+
+        # get appropriate title (most are default, others are overrides)
+        found_title = nil
+        if config['dynamic_items']['titles'][item].is_a?(Hash)
+          found_override = config['dynamic_items']['titles'][item]['overrides'].find {|override| template.instance_eval(override.keys.first) }
+          if found_override.nil?
+            found_title = config['dynamic_items']['titles'][item]['default']
+          else
+            found_title = found_override.values.first unless found_override.nil?
+          end
+        else
+          found_title = config['dynamic_items']['titles'][item]
+        end
+
+        {found_title => target}
       end
       # Add any 'before' static items
       items = config['static_items']['before'] + items if config['static_items'] && config['static_items'].has_key?('before')
